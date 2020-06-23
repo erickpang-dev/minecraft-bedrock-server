@@ -138,7 +138,7 @@ update() {
 # complete workflow
 main() {
     # check if current folder contains server files
-    if [ -f bedrock_server ] && [ -f bedrock_server_realms.debug ] && [ -d behavior_packs ] && [ -d resource_packs ]; then
+    if [ -f bedrock_server ] && [ -d behavior_packs ] && [ -d resource_packs ]; then
         update
     else
         # prompt user to install server
