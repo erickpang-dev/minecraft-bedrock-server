@@ -4,13 +4,6 @@ shopt -s extglob
 
 # ----------preparation----------
 
-# execute as many arguments as received exiting on error without proceeding
-pipeline() {
-    for i in "$@"; do
-        $i || break
-    done
-}
-
 # set variables
 set_variables() {
     DOWNLOAD_URL=$(wget -qO- https://www.minecraft.net/en-us/download/server/bedrock | grep -Eoi 'https://minecraft.azureedge.net/bin-linux/.*.zip')
@@ -125,7 +118,7 @@ update() {
         read UPDATE_SERVER_ANSWER
         case $UPDATE_SERVER_ANSWER in
         y)
-            pipeline backup download extract update_version_file restore success
+            backup && download && extract && update_version_file && restore && success
             ;;
         n)
             echo "Exiting script."
@@ -146,7 +139,7 @@ main() {
         read INSTALL_SERVER_ANSWER
         case $INSTALL_SERVER_ANSWER in
         y)
-            pipeline download extract update_version_file success remind
+            download && extract && update_version_file && success && remind
             ;;
         n)
             echo "Exiting script."
@@ -168,4 +161,4 @@ print_variables() {
 
 echo "Be sure to manually back up any behavior or resource pack that contains the word 'vanilla' or 'chemistry' as the script will ignore those packs considering it's part of the server installation content."
 
-pipeline set_variables "pkg_check unzip rsync curl" main
+set_variables && pkg_check unzip rsync curl && main
