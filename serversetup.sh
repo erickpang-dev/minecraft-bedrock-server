@@ -7,8 +7,10 @@ shopt -s extglob
 # set variables
 set_variables() {
     DOWNLOAD_URL=$(wget -qO- https://www.minecraft.net/en-us/download/server/bedrock | grep -Eoi 'https://minecraft.azureedge.net/bin-linux/.*.zip')
-    LATEST_VERSION=$(echo $DOWNLOAD_URL | grep -o -P '(?<=server-).*(?=[.])')
-    DOWNLOADED_FILE="bedrock-server-$LATEST_VERSION.zip"
+    RAW_LATEST_VERSION=$(echo $DOWNLOAD_URL | grep -o -P '(?<=server-).*(?=[.])')
+    DOWNLOADED_FILE="bedrock-server-$RAW_LATEST_VERSION.zip"
+    TEMP_VERSION=$(echo ${RAW_LATEST_VERSION/.0/.})
+    LATEST_VERSION=${TEMP_VERSION/../.0.}
     if [ -f version ]; then
         LOCAL_VERSION=$(cat version)
     else
