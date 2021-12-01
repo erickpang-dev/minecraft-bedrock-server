@@ -6,7 +6,7 @@ shopt -s extglob
 
 # set variables
 set_variables() {
-    DOWNLOAD_URL=$(wget -qO- https://www.minecraft.net/en-us/download/server/bedrock | grep -Eoi 'https://minecraft.azureedge.net/bin-linux/.*.zip')
+    DOWNLOAD_URL=$(wget -qO- -U Mozilla https://www.minecraft.net/en-us/download/server/bedrock | grep -Eoi 'https://minecraft.azureedge.net/bin-linux/.*.zip')
     RAW_LATEST_VERSION=$(echo $DOWNLOAD_URL | grep -o -P '(?<=server-).*(?=[.])')
     DOWNLOADED_FILE="bedrock-server-$RAW_LATEST_VERSION.zip"
     if [ "${DOWNLOAD_URL}" == "" ]; then
