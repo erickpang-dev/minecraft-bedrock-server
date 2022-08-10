@@ -1,5 +1,7 @@
 #!/bin/bash
-cd $(dirname $(realpath $0))
+mkdir -p .minecraft
+cd $(dirname $(realpath $0))"/.minecraft"
+echo $(dirname $(realpath $0))
 shopt -s extglob
 
 # ----------preparation----------
